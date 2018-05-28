@@ -1,0 +1,28 @@
+.header
+  background-color: whitesmoke
+  text-align: right
+  padding: 0 60px
+  
+.header .header-links
+  margin: 0px
+  list-style: none
+  padding: 0
+
+.header .header-links .header-link
+  display: inline-block
+  padding: 8px
+  transition: .3s all linear
+  border-bottom: 1px solid transparent
+
+.header .header-links .header-link:hover
+  border-bottom: 1px solid #006eff
+
+.header .header-links .header-link .header-link-text
+  text-decoration: none
+  font-size: 16px
+  transition: .3s all linear
+  
+
+.header .header-links .header-link .header-link-text:hover
+  color: #006eff
+
