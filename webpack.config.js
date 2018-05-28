@@ -22,14 +22,31 @@ module.exports = {
         loader: "babel-loader",
         options: {
           presets: ["env"]
-        },
+        }
+      }, {
+        test: /\.css$/,
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: 'style-loader',
+          },
+          {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 1,
+            }
+          },
+          {
+            loader: 'postcss-loader'
+          }
+        ]
       }
     ]
   }, resolve: {
     modules: [
       "node_modules",
     ],
-    extensions: [".js"],
+    extensions: [".js", ".css"],
   }, performance: {
     hints: "warning",
     maxAssetSize: 200000,

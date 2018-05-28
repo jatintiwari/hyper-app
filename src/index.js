@@ -1,17 +1,20 @@
 /* dependencies */
 import { h, app } from "hyperapp";
-import { Link, Route, location } from "@hyperapp/router";
+import { Route, location } from "@hyperapp/router";
 
 /* components */
 import Counter from "./components/counter";
 import Todo from "./components/todo";
+import Header from "./components/header";
+
+/* style */
+import style from "./index.css";
 
 const modules = {
   Counter: Counter(),
-  Todo: Todo()
+  Todo: Todo(),
+  Header: Header()
 };
-const Home = () => <h2>Home</h2>
-const About = () => <h2>About</h2>
 
 const Root = {
   state: {
@@ -25,25 +28,20 @@ const Root = {
   view: (state, actions) => {
     const views = {
       counter: modules.Counter.view(state.counter, actions.counter),
-      todo: modules.Todo.view()
+      todo: modules.Todo.view(),
+      header: modules.Header.view()
     }
     return (
       <main>
-        <ul>
-          <li>
-            <Link to="/">Counter</Link>
-          </li>
-          <li>
-            <Link to="/todos">Todo</Link>
-          </li>
-        </ul>
-        <hr />
-        <Route path="/" render={() => views.counter} />
-        <Route path="/todos" render={() => views.todo} />
+        {views.header}
+        <div class="container">
+          <Route path="/" render={() => views.counter} />
+          <Route path="/todos" render={() => views.todo} />
+        </div>
       </main>
     );
   }
 }
-
-const main = app(Root.state, Root.actions, Root.view, document.body);
+const appElem = document.getElementById('app');
+const main = app(Root.state, Root.actions, Root.view, appElem);
 const unsubscribe = location.subscribe(main.location)
