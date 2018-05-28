@@ -5,16 +5,16 @@ export default _ => ({
     count: 0
   },
   actions: {
-    down: value => state => ({ count: state.count - value }),
-    up: value => state => ({ count: state.count + value })
+    down: _ => state => ({ count: state.count -= 1 }),
+    up: _ => state => ({ count: state.count += 1 })
   },
   view: (state, actions) => {
     return (
-      <main>
+      <div>
         <h1>{state.count}</h1>
         <button onclick={() => actions.down(1)}>-</button>
         <button onclick={() => actions.up(1)}>+</button>
-      </main>
+      </div>
     )
   }
 })

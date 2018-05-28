@@ -71,6 +71,305 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./node_modules/@hyperapp/router/src/Link.js":
+/*!***************************************************!*\
+  !*** ./node_modules/@hyperapp/router/src/Link.js ***!
+  \***************************************************/
+/*! exports provided: Link */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Link", function() { return Link; });
+/* harmony import */ var hyperapp__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! hyperapp */ "./node_modules/hyperapp/src/index.js");
+
+
+function getOrigin(loc) {
+  return loc.protocol + "//" + loc.hostname + (loc.port ? ":" + loc.port : "")
+}
+
+function isExternal(anchorElement) {
+  // Location.origin and HTMLAnchorElement.origin are not
+  // supported by IE and Safari.
+  return getOrigin(location) !== getOrigin(anchorElement)
+}
+
+function Link(props, children) {
+  return function(state, actions) {
+    var to = props.to
+    var location = state.location
+    var onclick = props.onclick
+    delete props.to
+    delete props.location
+
+    props.href = to
+    props.onclick = function(e) {
+      if (onclick) {
+        onclick(e)
+      }
+      if (
+        e.defaultPrevented ||
+        e.button !== 0 ||
+        e.altKey ||
+        e.metaKey ||
+        e.ctrlKey ||
+        e.shiftKey ||
+        props.target === "_blank" ||
+        isExternal(e.currentTarget)
+      ) {
+      } else {
+        e.preventDefault()
+
+        if (to !== location.pathname) {
+          history.pushState(location.pathname, "", to)
+        }
+      }
+    }
+
+    return Object(hyperapp__WEBPACK_IMPORTED_MODULE_0__["h"])("a", props, children)
+  }
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/@hyperapp/router/src/Redirect.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/@hyperapp/router/src/Redirect.js ***!
+  \*******************************************************/
+/*! exports provided: Redirect */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Redirect", function() { return Redirect; });
+function Redirect(props) {
+  return function(state, actions) {
+    var location = state.location
+    history.replaceState(props.from || location.pathname, "", props.to)
+  }
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/@hyperapp/router/src/Route.js":
+/*!****************************************************!*\
+  !*** ./node_modules/@hyperapp/router/src/Route.js ***!
+  \****************************************************/
+/*! exports provided: Route */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Route", function() { return Route; });
+/* harmony import */ var _parseRoute__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./parseRoute */ "./node_modules/@hyperapp/router/src/parseRoute.js");
+
+
+function Route(props) {
+  return function(state, actions) {
+    var location = state.location
+    var match = Object(_parseRoute__WEBPACK_IMPORTED_MODULE_0__["parseRoute"])(props.path, location.pathname, {
+      exact: !props.parent
+    })
+
+    return (
+      match &&
+      props.render({
+        match: match,
+        location: location
+      })
+    )
+  }
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/@hyperapp/router/src/Switch.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/@hyperapp/router/src/Switch.js ***!
+  \*****************************************************/
+/*! exports provided: Switch */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Switch", function() { return Switch; });
+function Switch(props, children) {
+  return function(state, actions) {
+    var child,
+      i = 0
+    while (
+      !(child = children[i] && children[i](state, actions)) &&
+      i < children.length
+    )
+      i++
+    return child
+  }
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/@hyperapp/router/src/index.js":
+/*!****************************************************!*\
+  !*** ./node_modules/@hyperapp/router/src/index.js ***!
+  \****************************************************/
+/*! exports provided: Link, Route, Switch, Redirect, location */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Link__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Link */ "./node_modules/@hyperapp/router/src/Link.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Link", function() { return _Link__WEBPACK_IMPORTED_MODULE_0__["Link"]; });
+
+/* harmony import */ var _Route__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Route */ "./node_modules/@hyperapp/router/src/Route.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Route", function() { return _Route__WEBPACK_IMPORTED_MODULE_1__["Route"]; });
+
+/* harmony import */ var _Switch__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Switch */ "./node_modules/@hyperapp/router/src/Switch.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Switch", function() { return _Switch__WEBPACK_IMPORTED_MODULE_2__["Switch"]; });
+
+/* harmony import */ var _Redirect__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Redirect */ "./node_modules/@hyperapp/router/src/Redirect.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Redirect", function() { return _Redirect__WEBPACK_IMPORTED_MODULE_3__["Redirect"]; });
+
+/* harmony import */ var _location__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./location */ "./node_modules/@hyperapp/router/src/location.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "location", function() { return _location__WEBPACK_IMPORTED_MODULE_4__["location"]; });
+
+
+
+
+
+
+
+
+/***/ }),
+
+/***/ "./node_modules/@hyperapp/router/src/location.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/@hyperapp/router/src/location.js ***!
+  \*******************************************************/
+/*! exports provided: location */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "location", function() { return location; });
+function wrapHistory(keys) {
+  return keys.reduce(function(next, key) {
+    var fn = history[key]
+
+    history[key] = function(data, title, url) {
+      fn.call(this, data, title, url)
+      dispatchEvent(new CustomEvent("pushstate", { detail: data }))
+    }
+
+    return function() {
+      history[key] = fn
+      next && next()
+    }
+  }, null)
+}
+
+var location = {
+  state: {
+    pathname: window.location.pathname,
+    previous: window.location.pathname
+  },
+  actions: {
+    go: function(pathname) {
+      history.pushState(null, "", pathname)
+    },
+    set: function(data) {
+      return data
+    }
+  },
+  subscribe: function(actions) {
+    function handleLocationChange(e) {
+      actions.set({
+        pathname: window.location.pathname,
+        previous: e.detail
+          ? (window.location.previous = e.detail)
+          : window.location.previous
+      })
+    }
+
+    var unwrap = wrapHistory(["pushState", "replaceState"])
+
+    addEventListener("pushstate", handleLocationChange)
+    addEventListener("popstate", handleLocationChange)
+
+    return function() {
+      removeEventListener("pushstate", handleLocationChange)
+      removeEventListener("popstate", handleLocationChange)
+      unwrap()
+    }
+  }
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/@hyperapp/router/src/parseRoute.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/@hyperapp/router/src/parseRoute.js ***!
+  \*********************************************************/
+/*! exports provided: parseRoute */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "parseRoute", function() { return parseRoute; });
+function createMatch(isExact, path, url, params) {
+  return {
+    isExact: isExact,
+    path: path,
+    url: url,
+    params: params
+  }
+}
+
+function trimTrailingSlash(url) {
+  for (var len = url.length; "/" === url[--len]; );
+  return url.slice(0, len + 1)
+}
+
+function decodeParam(val) {
+  try {
+    return decodeURIComponent(val)
+  } catch (e) {
+    return val
+  }
+}
+
+function parseRoute(path, url, options) {
+  if (path === url || !path) {
+    return createMatch(path === url, path, url)
+  }
+
+  var exact = options && options.exact
+  var paths = trimTrailingSlash(path).split("/")
+  var urls = trimTrailingSlash(url).split("/")
+
+  if (paths.length > urls.length || (exact && paths.length < urls.length)) {
+    return
+  }
+
+  for (var i = 0, params = {}, len = paths.length, url = ""; i < len; i++) {
+    if (":" === paths[i][0]) {
+      params[paths[i].slice(1)] = urls[i] = decodeParam(urls[i])
+    } else if (paths[i] !== urls[i]) {
+      return
+    }
+    url += urls[i] + "/"
+  }
+
+  return createMatch(false, path, url.slice(0, -1), params)
+}
+
+
+/***/ }),
+
 /***/ "./node_modules/hyperapp/src/index.js":
 /*!********************************************!*\
   !*** ./node_modules/hyperapp/src/index.js ***!
@@ -482,20 +781,20 @@ exports.default = function (_) {
       count: 0
     },
     actions: {
-      down: function down(value) {
+      down: function down(_) {
         return function (state) {
-          return { count: state.count - value };
+          return { count: state.count -= 1 };
         };
       },
-      up: function up(value) {
+      up: function up(_) {
         return function (state) {
-          return { count: state.count + value };
+          return { count: state.count += 1 };
         };
       }
     },
     view: function view(state, actions) {
       return (0, _hyperapp.h)(
-        "main",
+        "div",
         null,
         (0, _hyperapp.h)(
           "h1",
@@ -523,6 +822,36 @@ exports.default = function (_) {
 
 /***/ }),
 
+/***/ "./src/components/todo.js":
+/*!********************************!*\
+  !*** ./src/components/todo.js ***!
+  \********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _hyperapp = __webpack_require__(/*! hyperapp */ "./node_modules/hyperapp/src/index.js");
+
+exports.default = function (_) {
+  return {
+    view: function view(state, actions) {
+      return (0, _hyperapp.h)(
+        'div',
+        null,
+        'Todos'
+      );
+    }
+  };
+};
+
+/***/ }),
+
 /***/ "./src/index.js":
 /*!**********************!*\
   !*** ./src/index.js ***!
@@ -535,31 +864,91 @@ exports.default = function (_) {
 
 var _hyperapp = __webpack_require__(/*! hyperapp */ "./node_modules/hyperapp/src/index.js");
 
+var _router = __webpack_require__(/*! @hyperapp/router */ "./node_modules/@hyperapp/router/src/index.js");
+
 var _counter = __webpack_require__(/*! ./components/counter */ "./src/components/counter.js");
 
 var _counter2 = _interopRequireDefault(_counter);
 
+var _todo = __webpack_require__(/*! ./components/todo */ "./src/components/todo.js");
+
+var _todo2 = _interopRequireDefault(_todo);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+/* components */
+/* dependencies */
 var modules = {
-  Counter: (0, _counter2.default)()
+  Counter: (0, _counter2.default)(),
+  Todo: (0, _todo2.default)()
 };
+var Home = function Home() {
+  return (0, _hyperapp.h)(
+    "h2",
+    null,
+    "Home"
+  );
+};
+var About = function About() {
+  return (0, _hyperapp.h)(
+    "h2",
+    null,
+    "About"
+  );
+};
+
 var Root = {
   state: {
-    counter: modules.Counter.state
+    counter: modules.Counter.state,
+    location: _router.location.state
   },
   actions: {
-    counter: modules.Counter.actions
+    counter: modules.Counter.actions,
+    location: _router.location.actions
   },
   view: function view(state, actions) {
     var views = {
-      counter: modules.Counter.view(state.counter, actions.counter)
+      counter: modules.Counter.view(state.counter, actions.counter),
+      todo: modules.Todo.view()
     };
-    return views.counter;
+    return (0, _hyperapp.h)(
+      "main",
+      null,
+      (0, _hyperapp.h)(
+        "ul",
+        null,
+        (0, _hyperapp.h)(
+          "li",
+          null,
+          (0, _hyperapp.h)(
+            _router.Link,
+            { to: "/" },
+            "Counter"
+          )
+        ),
+        (0, _hyperapp.h)(
+          "li",
+          null,
+          (0, _hyperapp.h)(
+            _router.Link,
+            { to: "/todos" },
+            "Todo"
+          )
+        )
+      ),
+      (0, _hyperapp.h)("hr", null),
+      (0, _hyperapp.h)(_router.Route, { path: "/", render: function render() {
+          return views.counter;
+        } }),
+      (0, _hyperapp.h)(_router.Route, { path: "/todos", render: function render() {
+          return views.todo;
+        } })
+    );
   }
 };
 
-(0, _hyperapp.app)(Root.state, Root.actions, Root.view, document.body);
+var main = (0, _hyperapp.app)(Root.state, Root.actions, Root.view, document.body);
+var unsubscribe = _router.location.subscribe(main.location);
 
 /***/ })
 

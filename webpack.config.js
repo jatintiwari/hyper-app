@@ -39,5 +39,6 @@ module.exports = {
     }
   }, devtool: "source-map",
   context: __dirname,
+  // externals: ["hyperapp", "@hyperapp/router"],
   target: "web"
 }
