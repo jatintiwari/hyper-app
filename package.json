@@ -6,6 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack --watch",
+    "build": "webpack -p",
+    "clean": "rm -rf dist",
     "start": "webpack-dev-server --content-base views --inline"
   },
   "keywords": [],
