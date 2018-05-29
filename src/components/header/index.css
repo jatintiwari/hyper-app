@@ -14,17 +14,15 @@
   transition: .3s all linear
   border-bottom: 1px solid transparent
 
-.header .header-links .header-link:hover,
 .header .header-links .header-link.selected
   border-bottom: 1px solid #006eff
 
 .header .header-links .header-link .header-link-text
   text-decoration: none
   font-size: 16px
+  color: black
   transition: .3s all linear
   
-
-.header .header-links .header-link .header-link-text:hover,
 .header .header-links .header-link.selected .header-link-text
   color: #006eff
 
