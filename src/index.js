@@ -19,18 +19,20 @@ const modules = {
 const Root = {
   state: {
     counter: modules.Counter.state,
+    todo: modules.Todo.state,
     location: location.state,
     header: modules.Header.state
   },
   actions: {
     counter: modules.Counter.actions,
+    todo: modules.Todo.actions,
     location: location.actions,
     header: modules.Header.actions
   },
   view: (state, actions) => {
     const views = {
       counter: modules.Counter.view(state.counter, actions.counter),
-      todo: modules.Todo.view(),
+      todo: modules.Todo.view(state.todo, actions.todo),
       header: modules.Header.view(state.header, actions.header)
     }
     return (

@@ -8,7 +8,8 @@ module.exports = {
     vendor: ['hyperapp', '@hyperapp/router']
   },
   devServer: {
-    historyApiFallback: true
+    historyApiFallback: true,
+    publicPath: '/dist/'
   },
   output: {
     path: path.resolve(__dirname, "dist"),
