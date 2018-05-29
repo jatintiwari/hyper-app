@@ -1,15 +1,32 @@
 const path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
   mode: process.env.NODE_ENV ? "production" : "development",
-  entry: "./src/index.js",
+  entry: {
+    app: "./src/index.js",
+    vendor: ['hyperapp', '@hyperapp/router']
+  },
   devServer: {
     historyApiFallback: true
   },
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "bundle.js",
-  }, module: {
+    chunkFilename: "vendor.js"
+  },
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        commons: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendor',
+          chunks: 'all'
+        }
+      }
+    }
+  },
+  module: {
     rules: [
       {
         test: /\.js?$/,
@@ -42,20 +59,23 @@ module.exports = {
         ]
       }
     ]
-  }, resolve: {
+  },
+  resolve: {
     modules: [
       "node_modules",
     ],
     extensions: [".js", ".css"],
-  }, performance: {
+  },
+  performance: {
     hints: "warning",
     maxAssetSize: 200000,
     maxEntrypointSize: 400000,
     assetFilter: function (assetFilename) {
       return assetFilename.endsWith('.css') || assetFilename.endsWith('.js');
     }
-  }, devtool: "source-map",
+  },
+  // devtool: "source-map",
   context: __dirname,
   // externals: ["hyperapp", "@hyperapp/router"],
-  target: "web"
+  target: "web",
 }
