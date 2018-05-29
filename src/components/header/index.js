@@ -17,23 +17,28 @@ export default _ => ({
     }]
   },
   actions: {
-    selectTab: event => (state) => {
-      const linkToSelect = event.currentTarget.dataset.linkText;
-      state.headerLinks.forEach(link => {
-        if (link.text === linkToSelect) { link.selected = true; }
-        else { link.selected = false; }
+    selectTab: linkToSelect => (state) => {
+      const headerLinks = state.headerLinks.map(link => {
+        if (link.to === linkToSelect) return Object.assign({}, link, { selected: true })
+        return Object.assign({}, link, { selected: false });
       });
-      return state;
+      return ({ headerLinks });
     }
   },
   view: (state, actions) => {
     return (
-      <div class="header">
+      <div class="header" oncreate={actions.selectTab.bind(actions, location.state.pathname)}>
         <ul class="header-links">
           {state.headerLinks.map(link => {
-            return (<li class={link.selected ? "header-link selected" : "header-link"} data-link-text={link.text} onclick={(e) => actions.selectTab(e)}>
-              <Link to={link.to} class="header-link-text">{link.text}</Link>
-            </li>)
+            return (
+              <Link
+                to={link.to}
+                class={link.selected ? "header-link selected" : "header-link"}
+                onclick={actions.selectTab.bind(actions, link.to)}>
+                <li class="header-link-text">
+                  {link.text}
+                </li>
+              </Link>)
           })}
         </ul>
       </div>

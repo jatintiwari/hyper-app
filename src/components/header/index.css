@@ -10,6 +10,7 @@
 
 .header .header-links .header-link
   display: inline-block
+  text-decoration: none
   padding: 8px
   transition: .3s all linear
   border-bottom: 1px solid transparent
@@ -18,7 +19,6 @@
   border-bottom: 1px solid #006eff
 
 .header .header-links .header-link .header-link-text
-  text-decoration: none
   font-size: 16px
   color: black
   transition: .3s all linear
