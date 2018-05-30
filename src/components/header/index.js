@@ -9,7 +9,7 @@ export default _ => ({
     headerLinks: [{
       text: 'Counter',
       to: '/',
-      selected: true
+      selected: false
     }, {
       text: 'Todo',
       to: '/todos',
